@@ -1,12 +1,35 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 
 export default function SoundStudio() {
   const [isPlaying, setIsPlaying] = useState(false);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  const togglePlay = () => {
+    if (audioRef.current) {
+      if (isPlaying) {
+        audioRef.current.pause();
+        setIsPlaying(false);
+      } else {
+        audioRef.current.play().then(() => {
+          setIsPlaying(true);
+        }).catch((err) => {
+          console.error("Audio playback error:", err);
+        });
+      }
+    }
+  };
 
   return (
     <section id="sound" className="py-32 px-6 md:px-14 border-t border-white/10 bg-charcoal/30 relative">
+      <audio 
+        ref={audioRef} 
+        src="/bg-music.mp3" 
+        preload="auto" 
+        onEnded={() => setIsPlaying(false)} 
+      />
+
       {/* Ambient Light Sızıntısı (Glow) for Audio Player */}
       <div 
         className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70vw] h-[70vw] rounded-full bg-gradient-to-tr from-signal/10 via-white/5 to-transparent blur-[140px] pointer-events-none z-0 transition-opacity duration-1000 ${isPlaying ? 'opacity-70' : 'opacity-30'}`}
@@ -29,7 +52,7 @@ export default function SoundStudio() {
           <div className="flex items-center gap-6 w-full lg:w-auto">
             {/* Play/Pause Butonu */}
             <button 
-              onClick={() => setIsPlaying(!isPlaying)}
+              onClick={togglePlay}
               className="w-16 h-16 rounded-full bg-softwhite text-void flex items-center justify-center font-mono text-xs font-bold hover:bg-signal hover:text-white transition-all duration-300 shrink-0" 
               data-cursor="ÇAL/DURDUR"
             >
