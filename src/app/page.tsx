@@ -5,6 +5,7 @@ import Header from "@/components/Header";
 import MenuOverlay from "@/components/MenuOverlay";
 import CustomCursor from "@/components/CustomCursor";
 import AudioPlayer from "@/components/AudioPlayer";
+import WhatsAppButton from "@/components/WhatsAppButton";
 import Hero from "@/components/Hero";
 import Disciplines from "@/components/Disciplines";
 import SoundStudio from "@/components/SoundStudio";
@@ -21,6 +22,7 @@ export default function Home() {
     <>
       <CustomCursor />
       <AudioPlayer />
+      <WhatsAppButton />
       <Header onMenuToggle={() => setIsMenuOpen(true)} />
       <MenuOverlay isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
       

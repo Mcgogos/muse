@@ -43,6 +43,31 @@ export default function AudioPlayer() {
     };
   }, []);
 
+  // Event listeners for Sound Studio interaction
+  useEffect(() => {
+    const handlePauseBg = () => {
+      if (audioRef.current && !audioRef.current.paused) {
+        audioRef.current.pause();
+        setIsPlaying(false);
+      }
+    };
+
+    const handleResumeBg = () => {
+      if (audioRef.current && audioRef.current.paused) {
+        audioRef.current.play().catch(() => {});
+        setIsPlaying(true);
+      }
+    };
+
+    window.addEventListener("pause-bg-music", handlePauseBg);
+    window.addEventListener("resume-bg-music", handleResumeBg);
+
+    return () => {
+      window.removeEventListener("pause-bg-music", handlePauseBg);
+      window.removeEventListener("resume-bg-music", handleResumeBg);
+    };
+  }, []);
+
   const togglePlay = (e: React.MouseEvent) => {
     e.stopPropagation(); // Prevent trigger first interaction twice
     if (audioRef.current) {
