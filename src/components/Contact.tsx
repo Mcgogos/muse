@@ -14,10 +14,17 @@ export default function Contact() {
     // Web3Forms Access Key
     formData.append("access_key", "c79013c5-7340-4011-962d-29581082e87d"); 
 
+    const object = Object.fromEntries(formData);
+    const json = JSON.stringify(object);
+
     try {
       const response = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
-        body: formData
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json"
+        },
+        body: json
       });
 
       const data = await response.json();
@@ -26,9 +33,11 @@ export default function Contact() {
         setStatus("success");
         (e.target as HTMLFormElement).reset(); // Formu temizle
       } else {
+        console.error("Web3Forms Error:", data);
         setStatus("error");
       }
     } catch (error) {
+      console.error("Fetch Error:", error);
       setStatus("error");
     }
   };
