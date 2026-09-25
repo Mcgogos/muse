@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 
 export default function CustomCursor() {
-  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const cursorRef = useRef<HTMLDivElement>(null);
   const [hoverText, setHoverText] = useState("");
   const [isHovered, setIsHovered] = useState(false);
 
@@ -22,7 +22,11 @@ export default function CustomCursor() {
     const updateCursor = () => {
       cursorX += (mouseX - cursorX) * 0.15;
       cursorY += (mouseY - cursorY) * 0.15;
-      setPosition({ x: cursorX, y: cursorY });
+      
+      if (cursorRef.current) {
+        cursorRef.current.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0) translate(-50%, -50%)`;
+      }
+      
       requestRef = requestAnimationFrame(updateCursor);
     };
 
@@ -60,14 +64,15 @@ export default function CustomCursor() {
 
   return (
     <div
+      ref={cursorRef}
       id="custom-cursor"
-      style={{ left: `${position.x}px`, top: `${position.y}px` }}
-      className={`hidden md:flex items-center justify-center rounded-full border bg-softwhite/10 backdrop-blur-[2px] transition-all duration-250 ${
+      className={`hidden md:flex items-center justify-center rounded-full border bg-softwhite/10 backdrop-blur-[2px] transition-[width,height,background-color,border-color,opacity] duration-300 ${
         isHovered ? "w-20 h-20 bg-signal border-transparent" : "w-6 h-6 border-softwhite/40"
       }`}
+      style={{ top: 0, left: 0, willChange: 'transform' }}
     >
       <span
-        className={`text-[9px] font-mono tracking-widest uppercase text-white font-bold transition-opacity ${
+        className={`text-[9px] font-mono tracking-widest uppercase text-white font-bold transition-opacity duration-300 ${
           isHovered ? "opacity-100" : "opacity-0"
         }`}
       >

@@ -1,8 +1,36 @@
-import React from "react";
+"use client";
+
+import React, { useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
 
 export default function Sessions() {
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useGSAP(() => {
+    gsap.registerPlugin(ScrollTrigger);
+
+    gsap.fromTo(
+      ".session-card",
+      { y: 50, opacity: 0, scale: 0.95 },
+      {
+        y: 0,
+        opacity: 1,
+        scale: 1,
+        duration: 1,
+        stagger: 0.2,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 70%",
+        },
+      }
+    );
+  }, { scope: sectionRef });
+
   return (
-    <section id="sessions" className="py-32 px-6 md:px-14 border-t border-white/10 bg-charcoal/20">
+    <section ref={sectionRef} id="sessions" className="py-32 px-6 md:px-14 border-t border-white/10 bg-charcoal/20">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16">
         <div>
           <span className="font-mono text-xs text-signal tracking-[0.3em] uppercase font-bold">ÖZGÜN FORMAT</span>
@@ -14,7 +42,7 @@ export default function Sessions() {
       {/* Sessions Poster Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         
-        <div className="group relative rounded-2xl overflow-hidden border border-white/10 bg-surface/50 p-8 flex flex-col justify-between h-[420px]" data-cursor="İZLE">
+        <div className="session-card group relative rounded-2xl overflow-hidden border border-white/10 bg-surface/50 p-8 flex flex-col justify-between h-[420px]" data-cursor="İZLE">
           <div className="flex justify-between items-start">
             <span className="font-mono text-xs text-muted tracking-widest">BÖLÜM 01</span>
             <span className="font-mono text-[10px] bg-white/10 px-3 py-1 rounded-full text-softwhite">22:15 DK</span>
@@ -26,7 +54,7 @@ export default function Sessions() {
           </div>
         </div>
 
-        <div className="group relative rounded-2xl overflow-hidden border border-white/10 bg-surface/50 p-8 flex flex-col justify-between h-[420px]" data-cursor="İZLE">
+        <div className="session-card group relative rounded-2xl overflow-hidden border border-white/10 bg-surface/50 p-8 flex flex-col justify-between h-[420px]" data-cursor="İZLE">
           <div className="flex justify-between items-start">
             <span className="font-mono text-xs text-muted tracking-widest">BÖLÜM 02</span>
             <span className="font-mono text-[10px] bg-white/10 px-3 py-1 rounded-full text-softwhite">19:40 DK</span>

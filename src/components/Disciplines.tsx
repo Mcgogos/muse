@@ -1,8 +1,35 @@
-import React from "react";
+"use client";
+
+import React, { useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
 
 export default function Disciplines() {
+  const containerRef = useRef<HTMLElement>(null);
+
+  useGSAP(() => {
+    gsap.registerPlugin(ScrollTrigger);
+
+    gsap.fromTo(
+      ".discipline-item",
+      { y: 50, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        duration: 0.8,
+        stagger: 0.15,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top 75%",
+        },
+      }
+    );
+  }, { scope: containerRef });
+
   return (
-    <section id="what-we-create" className="py-32 px-6 md:px-14 border-t border-white/10">
+    <section ref={containerRef} id="what-we-create" className="py-32 px-6 md:px-14 border-t border-white/10">
       <div className="mb-16 font-mono text-xs text-muted tracking-[0.3em] uppercase">
         02 // NELER ÜRETİYORUZ
       </div>

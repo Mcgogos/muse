@@ -4,6 +4,7 @@ import React, { useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
+import AbstractShape from "./AbstractShape";
 
 export default function Hero() {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -27,10 +28,11 @@ export default function Hero() {
 
   return (
     <section ref={heroRef} id="hero" className="relative h-screen w-full flex items-center justify-center overflow-hidden">
-      {/* Ambient Visual Canvas */}
-      <div className="absolute inset-0 z-0 scale-100 flex items-center justify-center pointer-events-none">
-        <div className="w-[85vw] h-[85vh] rounded-2xl bg-gradient-to-b from-[#141417] via-charcoal to-void border border-white/5 opacity-60 flex items-center justify-center overflow-hidden">
-          <div className="w-[30vw] h-[30vw] rounded-full bg-signal/15 blur-[100px] animate-pulse"></div>
+      {/* Ambient Visual Canvas (3D & Background) */}
+      <div className="absolute inset-0 z-0 flex items-center justify-center pointer-events-none">
+        <div className="w-[85vw] h-[85vh] rounded-2xl bg-gradient-to-b from-[#141417] via-charcoal to-void border border-white/5 opacity-80 flex items-center justify-center overflow-hidden relative">
+          <div className="absolute w-[30vw] h-[30vw] rounded-full bg-signal/10 blur-[120px] animate-pulse"></div>
+          <AbstractShape />
         </div>
       </div>
 
