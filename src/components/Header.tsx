@@ -12,9 +12,6 @@ export default function Header({ onMenuToggle }: HeaderProps) {
       <a href="#" className="font-display font-bold text-lg md:text-xl tracking-tighter" data-cursor="MUSE">
         MUSE
       </a>
-      <div className="hidden md:block text-[11px] font-mono tracking-[0.3em] uppercase text-muted">
-        Sanat · Medya · Teknoloji
-      </div>
       <button 
         onClick={onMenuToggle}
         className="text-xs font-mono tracking-[0.2em] uppercase hover:text-signal transition-colors" 

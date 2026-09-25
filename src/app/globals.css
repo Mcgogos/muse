@@ -1,4 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;500;700;800&display=swap');
 @import "tailwindcss";
 
 @theme inline {
@@ -9,9 +8,9 @@
   --color-muted: #686870;
   --color-signal: #FF3B00;
 
-  --font-display: 'Syne', sans-serif;
-  --font-sans: 'Inter', sans-serif;
-  --font-mono: 'Space Mono', monospace;
+  --font-display: "Syne", sans-serif;
+  --font-sans: "Inter", sans-serif;
+  --font-mono: "Space Mono", monospace;
 }
 
 body {

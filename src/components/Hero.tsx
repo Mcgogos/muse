@@ -38,14 +38,11 @@ export default function Hero() {
 
       {/* Hero Typography */}
       <div ref={contentRef} className="relative z-10 text-center select-none px-4">
-        <p className="text-[10px] md:text-xs tracking-[0.5em] uppercase text-muted font-mono mb-4">
-          Sanat · Medya · Teknoloji
-        </p>
         <h1 className="text-7xl sm:text-9xl md:text-[13rem] font-display font-extrabold tracking-tighter leading-none text-softwhite">
           MUSE
         </h1>
         <p className="text-xs md:text-sm tracking-[0.35em] uppercase text-muted mt-4 font-mono">
-          YARATICI STÜDYO
+          CREATIVE HOUSE
         </p>
       </div>
 
