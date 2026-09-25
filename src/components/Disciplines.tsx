@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
@@ -88,8 +88,9 @@ const disciplinesData = [
 const WaveformBackground = () => (
   <div className="absolute inset-0 overflow-hidden flex items-center justify-around opacity-0 group-hover:opacity-15 transition-opacity duration-700 pointer-events-none z-0">
     {Array.from({ length: 50 }).map((_, i) => {
-      const delay = Math.random() * -2;
-      const duration = 0.6 + Math.random() * 0.8;
+      // Use index to create deterministic pseudo-random values to avoid hydration/pure render lint errors
+      const delay = ((i * 0.17) % 2) * -1;
+      const duration = 0.6 + ((i * 0.23) % 0.8);
       return (
         <div
           key={i}
@@ -113,7 +114,15 @@ const WaveformBackground = () => (
 
 export default function Disciplines() {
   const containerRef = useRef<HTMLElement>(null);
+  const videoContainerRef = useRef<HTMLDivElement>(null);
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const [hoveredId, setHoveredId] = useState<string | null>(null);
+
+  // Use generic Function type for GSAP quickTo instead of any
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
+  const xTo = useRef<Function | null>(null);
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
+  const yTo = useRef<Function | null>(null);
 
   useGSAP(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -133,17 +142,52 @@ export default function Disciplines() {
         },
       }
     );
+
+    // Setup high-performance mouse tracking for the floating video
+    if (videoContainerRef.current) {
+      xTo.current = gsap.quickTo(videoContainerRef.current, "x", { duration: 0.5, ease: "power3" });
+      yTo.current = gsap.quickTo(videoContainerRef.current, "y", { duration: 0.5, ease: "power3" });
+    }
   }, { scope: containerRef });
 
   const toggleAccordion = (index: number) => {
     setOpenIndex(openIndex === index ? null : index);
   };
 
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (xTo.current && yTo.current && hoveredId === "gorsel") {
+      // Fare imlecinin (ve "KAPAT" yazısının) videoyu kapatmaması için
+      // Videoyu imlecin 20 piksel sağına ve 20 piksel aşağısına hizalıyoruz.
+      xTo.current(e.clientX + 20);
+      yTo.current(e.clientY + 20);
+    }
+  };
+
   return (
-    <section ref={containerRef} id="what-we-create" className="py-32 px-6 md:px-14 border-t border-white/10">
+    <section ref={containerRef} id="what-we-create" className="py-32 px-6 md:px-14 border-t border-white/10 relative">
       <div className="mb-16 font-mono text-xs text-muted tracking-[0.3em] uppercase">
         02 // NELER ÜRETİYORUZ
       </div>
+      
+      {/* Floating Video for GÖRSEL (Visible on all sizes now to ensure it works) */}
+      <div 
+        ref={videoContainerRef}
+        className="fixed top-0 left-0 w-64 h-36 md:w-80 md:h-44 pointer-events-none z-[100]"
+      >
+        <div className={`w-full h-full rounded-xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.8)] border border-white/20 transition-all duration-500 origin-top-left bg-[#060607] ${
+            hoveredId === 'gorsel' ? 'opacity-100 scale-100' : 'opacity-0 scale-50'
+        }`}>
+          <video 
+            autoPlay 
+            loop 
+            muted 
+            playsInline
+            className="w-full h-full object-cover"
+            src="https://videos.pexels.com/video-files/5888894/5888894-uhd_2560_1440_24fps.mp4"
+          />
+        </div>
+      </div>
+
       <div className="divide-y divide-white/10">
         
         {disciplinesData.map((item, index) => {
@@ -153,6 +197,9 @@ export default function Disciplines() {
             <div 
               key={item.id}
               onClick={() => toggleAccordion(index)}
+              onMouseEnter={() => setHoveredId(item.id)}
+              onMouseLeave={() => setHoveredId(null)}
+              onMouseMove={handleMouseMove}
               className="discipline-item-anim group py-12 relative cursor-pointer transition-all duration-500 hover:px-4"
               data-cursor={isOpen ? "KAPAT" : "KEŞFET"}
             >

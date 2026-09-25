@@ -4,7 +4,7 @@ import React, { useEffect, useState, useRef } from "react";
 
 export default function CustomCursor() {
   const cursorRef = useRef<HTMLDivElement>(null);
-  const [hoverText, setHoverText] = useState("");
+  const textRef = useRef<HTMLSpanElement>(null);
   const [isHovered, setIsHovered] = useState(false);
 
   useEffect(() => {
@@ -13,6 +13,7 @@ export default function CustomCursor() {
     let cursorX = mouseX;
     let cursorY = mouseY;
     let requestRef: number;
+    let hoveredElement: HTMLElement | null = null;
 
     const onMouseMove = (e: MouseEvent) => {
       mouseX = e.clientX;
@@ -26,6 +27,14 @@ export default function CustomCursor() {
       if (cursorRef.current) {
         cursorRef.current.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0) translate(-50%, -50%)`;
       }
+
+      // Constantly read the attribute so React state changes (like KEŞFET -> KAPAT) reflect instantly!
+      if (hoveredElement && textRef.current) {
+        const newText = hoveredElement.getAttribute('data-cursor') || "";
+        if (textRef.current.innerText !== newText) {
+          textRef.current.innerText = newText;
+        }
+      }
       
       requestRef = requestAnimationFrame(updateCursor);
     };
@@ -36,18 +45,18 @@ export default function CustomCursor() {
     // Event delegation for data-cursor elements
     const handleMouseOver = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
-      const cursorEl = target.closest('[data-cursor]');
+      const cursorEl = target.closest('[data-cursor]') as HTMLElement;
       if (cursorEl) {
+        hoveredElement = cursorEl;
         setIsHovered(true);
-        setHoverText(cursorEl.getAttribute('data-cursor') || "");
       }
     };
 
     const handleMouseOut = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
       if (target.closest('[data-cursor]')) {
+        hoveredElement = null;
         setIsHovered(false);
-        setHoverText("");
       }
     };
 
@@ -72,11 +81,11 @@ export default function CustomCursor() {
       style={{ top: 0, left: 0, willChange: 'transform' }}
     >
       <span
+        ref={textRef}
         className={`text-[9px] font-mono tracking-widest uppercase text-white font-bold transition-opacity duration-300 ${
           isHovered ? "opacity-100" : "opacity-0"
         }`}
       >
-        {hoverText}
       </span>
     </div>
   );

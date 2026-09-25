@@ -18,7 +18,7 @@ export default function SoundStudio() {
           <h2 className="font-display text-3xl md:text-6xl font-bold tracking-tight mt-2">AKUSTİK HASSASİYET</h2>
         </div>
         <p className="font-mono text-xs text-muted max-w-xs mt-4 md:mt-0">
-          Analog sıcaklık, dijital kusursuzluk. Stüdyo kayıtlarından Dolby Atmos mastering'e uzanan sonik evren.
+          Analog sıcaklık, dijital kusursuzluk. Stüdyo kayıtlarından Dolby Atmos mastering&apos;e uzanan sonik evren.
         </p>
       </div>
 
@@ -33,7 +33,7 @@ export default function SoundStudio() {
               className="w-16 h-16 rounded-full bg-softwhite text-void flex items-center justify-center font-mono text-xs font-bold hover:bg-signal hover:text-white transition-all duration-300 shrink-0" 
               data-cursor="ÇAL/DURDUR"
             >
-              <span>{isPlaying ? '❚❚' : '▶'}</span>
+              <span>{isPlaying ? '■■' : '▶'}</span>
             </button>
             <div>
               <div className="font-mono text-[10px] text-signal uppercase tracking-widest font-bold">ŞU AN ÇALAN</div>

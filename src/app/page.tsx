@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Header from "@/components/Header";
 import MenuOverlay from "@/components/MenuOverlay";
 import CustomCursor from "@/components/CustomCursor";
+import AudioPlayer from "@/components/AudioPlayer";
 import Hero from "@/components/Hero";
 import Disciplines from "@/components/Disciplines";
 import SoundStudio from "@/components/SoundStudio";
@@ -19,6 +20,7 @@ export default function Home() {
   return (
     <>
       <CustomCursor />
+      <AudioPlayer />
       <Header onMenuToggle={() => setIsMenuOpen(true)} />
       <MenuOverlay isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
       
