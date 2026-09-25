@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
@@ -12,22 +12,30 @@ const disciplinesData = [
     subtitle: "Müzik Prodüksiyonu · Stüdyo Kayıt · Miks & Mastering · Analog Sentez",
     hasWaveform: true,
     details: (
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8 pt-8 border-t border-white/10 font-sans">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8 pt-8 border-t border-white/10 font-sans">
         <div>
-          <h4 className="font-mono text-signal text-xs tracking-widest mb-2 font-bold">01 / PRODÜKSİYON</h4>
-          <p className="text-xs md:text-sm text-muted">Sıfırdan aranje, beat yapımı ve canlı enstrüman kayıtları. Analog donanımlarla şarkınızın ruhunu bulduğu yer.</p>
+          <h4 className="font-mono text-signal text-xs tracking-widest mb-2 font-bold">01 / PRODÜKSİYON & BEAT</h4>
+          <p className="text-xs md:text-sm text-muted">Sıfırdan aranje, beste ve beat yapımı. Fikrinizi tam teşekküllü bir hit şarkıya dönüştürüyor, projenizin müzikal altyapısını inşa ediyoruz.</p>
         </div>
         <div>
           <h4 className="font-mono text-signal text-xs tracking-widest mb-2 font-bold">02 / MİKS & MASTERING</h4>
-          <p className="text-xs md:text-sm text-muted">Neve 1073 ve Tube-Tech donanımlarıyla endüstri standartlarında parlaklık, genişlik ve Dolby Atmos desteği.</p>
+          <p className="text-xs md:text-sm text-muted">Analog ekipmanlar (Neve 1073, Tube-Tech) ve endüstri standardı dijital araçlarla şarkınızı tüm listelere hazır hale getiriyoruz.</p>
         </div>
         <div>
-          <h4 className="font-mono text-signal text-xs tracking-widest mb-2 font-bold">03 / SES TASARIMI</h4>
-          <p className="text-xs md:text-sm text-muted">Film, reklam ve dijital medya için foley, sfx ve sinematik ses dokularının sıfırdan yaratılması.</p>
+          <h4 className="font-mono text-signal text-xs tracking-widest mb-2 font-bold">03 / VOKAL & KAYIT</h4>
+          <p className="text-xs md:text-sm text-muted">Neumann ve Telefunken mikrofon parkuruyla, tamamen akustik yalıtımlı odamızda sıfır dip gürültüsü ve maksimum berraklıkla kayıt imkanı.</p>
         </div>
         <div>
-          <h4 className="font-mono text-signal text-xs tracking-widest mb-2 font-bold">04 / DONANIM</h4>
-          <p className="text-xs md:text-sm text-muted">Vintage mikrofon parkuru, modüler synthesizer'lar ve tamamen akustik yalıtımlı kayıt odası.</p>
+          <h4 className="font-mono text-signal text-xs tracking-widest mb-2 font-bold">04 / SES TASARIMI</h4>
+          <p className="text-xs md:text-sm text-muted">Film, reklam ve dijital medya için foley, SFX ve sinematik ses dokularının sıfırdan yaratılması.</p>
+        </div>
+        <div>
+          <h4 className="font-mono text-signal text-xs tracking-widest mb-2 font-bold">05 / PODCAST & BROADCAST</h4>
+          <p className="text-xs md:text-sm text-muted">Profesyonel yayın standartlarında, yüksek kaliteli ekipmanlarla kesintisiz ve kristal netliğinde podcast ve sesli içerik kaydı.</p>
+        </div>
+        <div>
+          <h4 className="font-mono text-signal text-xs tracking-widest mb-2 font-bold">06 / YAPAY ZEKA LAB</h4>
+          <p className="text-xs md:text-sm text-muted">Sınırları zorlayan üretken yapay zeka destekli ses tasarımı ve algoritmik prodüksiyonla geleceğin seslerini inşa ediyoruz.</p>
         </div>
       </div>
     )
@@ -75,7 +83,7 @@ const disciplinesData = [
   {
     id: "lab",
     title: "LABORATUVAR",
-    subtitle: "Yapay Zekâ Projeleri · Üretken Sanat (Generative) · Yaratıcı Kodlama",
+    subtitle: "Yapay Zeka Projeleri · Üretken Sanat (Generative) · Yaratıcı Kodlama",
     hasWaveform: false,
     details: (
       <div className="mt-8 pt-8 border-t border-white/10 font-sans">
@@ -88,7 +96,6 @@ const disciplinesData = [
 const WaveformBackground = () => (
   <div className="absolute inset-0 overflow-hidden flex items-center justify-around opacity-0 group-hover:opacity-15 transition-opacity duration-700 pointer-events-none z-0">
     {Array.from({ length: 50 }).map((_, i) => {
-      // Use index to create deterministic pseudo-random values to avoid hydration/pure render lint errors
       const delay = ((i * 0.17) % 2) * -1;
       const duration = 0.6 + ((i * 0.23) % 0.8);
       return (
@@ -118,7 +125,6 @@ export default function Disciplines() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const [hoveredId, setHoveredId] = useState<string | null>(null);
 
-  // Use generic Function type for GSAP quickTo instead of any
   // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
   const xTo = useRef<Function | null>(null);
   // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
@@ -143,7 +149,6 @@ export default function Disciplines() {
       }
     );
 
-    // Setup high-performance mouse tracking for the floating video
     if (videoContainerRef.current) {
       xTo.current = gsap.quickTo(videoContainerRef.current, "x", { duration: 0.5, ease: "power3" });
       yTo.current = gsap.quickTo(videoContainerRef.current, "y", { duration: 0.5, ease: "power3" });
@@ -156,8 +161,6 @@ export default function Disciplines() {
 
   const handleMouseMove = (e: React.MouseEvent) => {
     if (xTo.current && yTo.current && hoveredId === "gorsel") {
-      // Fare imlecinin (ve "KAPAT" yazısının) videoyu kapatmaması için
-      // Videoyu imlecin 20 piksel sağına ve 20 piksel aşağısına hizalıyoruz.
       xTo.current(e.clientX + 20);
       yTo.current(e.clientY + 20);
     }
@@ -169,7 +172,6 @@ export default function Disciplines() {
         02 // NELER ÜRETİYORUZ
       </div>
       
-      {/* Floating Video for GÖRSEL (Visible on all sizes now to ensure it works) */}
       <div 
         ref={videoContainerRef}
         className="fixed top-0 left-0 w-64 h-36 md:w-80 md:h-44 pointer-events-none z-[100]"
@@ -217,7 +219,6 @@ export default function Disciplines() {
                 </div>
               </div>
 
-              {/* Accordion Content */}
               <div 
                 className={`grid transition-all duration-700 ease-[cubic-bezier(0.87,0,0.13,1)] ${
                   isOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
