@@ -1,8 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
-import Header from "@/components/Header";
-import MenuOverlay from "@/components/MenuOverlay";
+import React from "react";
+import CinematicIntro from "@/components/CinematicIntro";
 import CustomCursor from "@/components/CustomCursor";
 import AudioPlayer from "@/components/AudioPlayer";
 import WhatsAppButton from "@/components/WhatsAppButton";
@@ -16,15 +15,12 @@ import Manifesto from "@/components/Manifesto";
 import Contact from "@/components/Contact";
 
 export default function Home() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-
   return (
     <>
+      <CinematicIntro />
       <CustomCursor />
       <AudioPlayer />
-      <WhatsAppButton />
-      <Header onMenuToggle={() => setIsMenuOpen(true)} />
-      <MenuOverlay isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
+      <WhatsAppButton phoneNumber="905325579361" />
       
       <main className="relative z-10">
         <Hero />

@@ -18,7 +18,7 @@ interface Particle {
 }
 
 export default function WhatsAppButton({
-  phoneNumber = "905000000000",
+  phoneNumber = "905325579361",
   message = "Merhaba, MUSE HOUSE hakkında bilgi almak ve projem hakkında görüşmek istiyorum.",
 }: WhatsAppButtonProps) {
   const [isExploding, setIsExploding] = useState(false);

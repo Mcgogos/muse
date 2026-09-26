@@ -75,7 +75,7 @@ export default function CustomCursor() {
     <div
       ref={cursorRef}
       id="custom-cursor"
-      className={`hidden md:flex items-center justify-center rounded-full border bg-softwhite/10 backdrop-blur-[2px] transition-[width,height,background-color,border-color,opacity] duration-300 ${
+      className={`pointer-events-none hidden md:flex items-center justify-center rounded-full border bg-softwhite/10 backdrop-blur-[2px] transition-[width,height,background-color,border-color,opacity] duration-300 ${
         isHovered ? "w-20 h-20 bg-signal border-transparent" : "w-6 h-6 border-softwhite/40"
       }`}
       style={{ top: 0, left: 0, willChange: 'transform' }}

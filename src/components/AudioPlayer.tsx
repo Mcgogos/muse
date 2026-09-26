@@ -43,17 +43,17 @@ export default function AudioPlayer() {
     };
   }, []);
 
-  // Event listeners for Sound Studio interaction
+  // Event listeners for Sound Studio & Sessions interaction
   useEffect(() => {
     const handlePauseBg = () => {
-      if (audioRef.current && !audioRef.current.paused) {
+      if (audioRef.current) {
         audioRef.current.pause();
         setIsPlaying(false);
       }
     };
 
     const handleResumeBg = () => {
-      if (audioRef.current && audioRef.current.paused) {
+      if (audioRef.current) {
         audioRef.current.play().catch(() => {});
         setIsPlaying(true);
       }

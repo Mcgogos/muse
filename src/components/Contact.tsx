@@ -108,8 +108,6 @@ export default function Contact() {
         <div className="flex gap-6">
           <a href="#" className="hover:text-softwhite transition-colors">YOUTUBE</a>
           <a href="#" className="hover:text-softwhite transition-colors">INSTAGRAM</a>
-          <a href="#" className="hover:text-softwhite transition-colors">SPOTIFY</a>
-          <a href="#" className="hover:text-softwhite transition-colors">GITHUB</a>
         </div>
       </div>
     </section>

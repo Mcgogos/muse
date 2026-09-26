@@ -10,15 +10,19 @@ interface MenuOverlayProps {
 export default function MenuOverlay({ isOpen, onClose }: MenuOverlayProps) {
   return (
     <div 
-      className={`fixed inset-0 bg-void/95 backdrop-blur-2xl z-40 flex flex-col justify-between p-8 md:p-20 transition-all duration-500 ${
+      className={`fixed inset-0 bg-void/95 backdrop-blur-2xl z-[99999] flex flex-col justify-between p-8 md:p-20 transition-all duration-500 ${
         isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
       }`}
     >
       <div className="flex justify-between items-center border-b border-white/10 pb-6">
         <span className="font-mono text-xs text-muted tracking-widest">EVİ KEŞFET</span>
         <button 
+          type="button"
           onClick={onClose}
-          className="font-mono text-xs text-softwhite tracking-widest hover:text-signal"
+          onMouseDown={onClose}
+          onTouchEnd={onClose}
+          className="font-mono text-xs text-white bg-signal/80 hover:bg-signal px-4 py-2 rounded-full font-bold tracking-widest cursor-pointer shadow-lg transition-all"
+          data-cursor="KAPAT"
         >
           [ KAPAT × ]
         </button>
