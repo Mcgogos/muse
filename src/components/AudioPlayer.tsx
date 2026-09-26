@@ -43,8 +43,17 @@ export default function AudioPlayer() {
     };
   }, []);
 
-  // Event listeners for Sound Studio & Sessions interaction
+  // Event listeners for Splash screen, Sound Studio, Visual Direction & Sessions interaction
   useEffect(() => {
+    const handleStartBg = () => {
+      if (audioRef.current) {
+        audioRef.current.volume = 0.4;
+        audioRef.current.play().then(() => {
+          setIsPlaying(true);
+        }).catch(() => {});
+      }
+    };
+
     const handlePauseBg = () => {
       if (audioRef.current) {
         audioRef.current.pause();
@@ -59,10 +68,12 @@ export default function AudioPlayer() {
       }
     };
 
+    window.addEventListener("start-bg-music", handleStartBg);
     window.addEventListener("pause-bg-music", handlePauseBg);
     window.addEventListener("resume-bg-music", handleResumeBg);
 
     return () => {
+      window.removeEventListener("start-bg-music", handleStartBg);
       window.removeEventListener("pause-bg-music", handlePauseBg);
       window.removeEventListener("resume-bg-music", handleResumeBg);
     };

@@ -25,7 +25,10 @@ export default function CinematicIntro({ onComplete }: CinematicIntroProps) {
     const t3 = setTimeout(() => setStage("rotate_vertical"), 1400); // 3. Çarptıktan sonra DİKEY konuma geçme & aralık açılması
     const t4 = setTimeout(() => setStage("dot_expand"), 2000);      // 4. Kırmızı noktanın belirmesi & devasa parlaması
     const t5 = setTimeout(() => setStage("dot_implode"), 2900);     // 5. Kırmızı ışığın merkeze/noktaya toplanması (Implode)
-    const t6 = setTimeout(() => setStage("exit"), 3700);            // 6. Noktaya odaklandığı anda ipeksi yumuşak erime geçişi
+    const t6 = setTimeout(() => {
+      setStage("exit");
+      window.dispatchEvent(new CustomEvent("start-bg-music"));
+    }, 3700);                                                        // 6. Splash screen eridiği anda müzik başlar
     const t7 = setTimeout(() => {
       setIsVisible(false);
       if (onComplete) onComplete();
@@ -44,6 +47,7 @@ export default function CinematicIntro({ onComplete }: CinematicIntroProps) {
 
   const handleSkip = () => {
     setStage("exit");
+    window.dispatchEvent(new CustomEvent("start-bg-music"));
     setTimeout(() => {
       setIsVisible(false);
       if (onComplete) onComplete();
