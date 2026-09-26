@@ -87,6 +87,15 @@ export default function VisualDirection() {
     setMounted(true);
   }, []);
 
+  // Pause site background music when video modal opens, resume when closed
+  useEffect(() => {
+    if (activeVideoModal) {
+      window.dispatchEvent(new CustomEvent("pause-bg-music"));
+    } else if (mounted) {
+      window.dispatchEvent(new CustomEvent("resume-bg-music"));
+    }
+  }, [activeVideoModal, mounted]);
+
   const activeReel = cinematicData[activeIndex];
 
   const closeModal = (e?: React.MouseEvent | React.TouchEvent | React.PointerEvent) => {
